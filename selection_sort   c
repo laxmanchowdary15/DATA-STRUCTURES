@@ -1,0 +1,37 @@
+#include<stdio.h>
+#include<stdlib.h>
+void selectionsort(int a[],int n){
+    int pos,temp;
+    for(int i=0;i<n-1;i++){
+        pos=i;
+        for(int j=i+1;j<n;j++){
+            if(a[pos]>a[j])   pos=j;
+            if(pos!=i){
+               temp=a[pos];
+               a[pos]=a[i];
+               a[i]=temp;
+            }
+        }
+    }
+}
+void Take_array(int a[],int n){
+    for(int i=0;i<n;i++){
+        printf("Enter the element %d :",i+1);
+        scanf("%d",&a[i]);
+    }
+}
+void Print_array(int a[],int n){
+    for(int i=0;i<n;i++)     printf("%d\t",a[i]);
+    printf("\n");
+}
+int main(){
+    int arr[200],n;
+    printf("Enter the number of elments will be given:");
+    scanf("%d",&n);
+    printf("Enter the elements:\n");
+    Take_array(arr,n);
+    Print_array(arr,n);
+    printf("After sorting:\n");
+    selectionsort(arr,n);
+    Print_array(arr,n);
+}
