@@ -1,0 +1,111 @@
+#include<stdio.h>
+#include<stdlib.h>
+typedef struct hashtable{
+    int data;
+    struct hashtable *next;
+}node;
+int hash(int x,int s){
+    return x%s;
+}
+void insert(node *t[],int x,int s){
+    int i=hash(x,s);
+    node *p=(node*)malloc(sizeof(node));
+    p->data=x;
+    p->next=NULL;
+    if(t[i]->next==NULL)    t[i]->next=p;
+    else{
+        p->next=t[i]->next;
+        t[i]->next=p;
+    }
+}
+void display(node *t[],int s){
+    node *temp;
+    int i;
+    for(i=0;i<s;i++){
+        temp=t[i]->next;
+        printf("%d||->",i);
+        while(temp!=NULL){
+            printf("%d->",temp->data);
+            temp=temp->next;
+        }
+        printf("NULL\n");
+    }
+}
+void search(node *t[],int x,int s){
+    int i=hash(x,s);
+    int flag=0;
+    node *temp=t[i]->next;
+    while(temp!=NULL){
+        if(temp->data==x){
+            flag=1;
+            break;
+        }
+        else   temp=temp->next;
+    }
+    if(flag)   printf("Element %d is found:",x);
+    else    printf("Element %d is not found",x);
+}
+void delete(node *t[],int x,int s){
+    int i=hash(x,s);
+    int flag=0;
+    node *temp=t[i]->next,*temp1=t[i];
+    while(temp!=NULL){
+        if(temp->data==x){
+            flag=1;
+            break;
+        }
+        else{
+            temp=temp->next;
+            temp1=temp1->next;
+        }
+    }
+    if(flag){
+        temp1->next=temp->next;
+        free(temp);
+    }
+    else    printf("Element %d is not found",x);
+}
+void main(){
+    printf("Enter the table size:");
+    int s;
+    scanf("%d",&s);
+    node *t[s];
+    int i,ch,ele,n;
+    for(i=0;i<s;i++){
+        t[i]=(node*)malloc(sizeof(node));
+        t[i]->next=NULL;
+    }
+    printf("Enter the  elemnts(Enter a negative number to stop):");
+    scanf("%d",&n);
+    while(n>=0){
+        insert(t,n,s);
+        printf("Enter the  elements(Enter a negative number to stop):");
+        scanf("%d",&n);
+    }
+    while(1){
+    printf("\n1:Display\n2:Insert\n3:Search\n4:Delete\n5:EXIT\n");
+    scanf("%d",&ch);
+    switch(ch){
+        case 1: printf("The Elements in hask table are:\n");
+                display(t,s);
+                break;
+        case 2: printf("Enter the element to insert:");
+                scanf("%d",&ele);
+                insert(t,ele,s);
+                display(t,s);
+                break;
+        case 3: printf("Enter the element to search:");
+                scanf("%d",&ele);
+                search(t,ele,s);
+                break;
+        case 4: printf("Enter the element to delete:");
+                scanf("%d",&ele);
+                delete(t,ele,s);
+                display(t,s);
+                break;
+        case 5: exit(0);
+        default:
+                  printf("Enter correct choice:");
+    }
+    }
+}
