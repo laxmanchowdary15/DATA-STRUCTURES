@@ -1,0 +1,39 @@
+#include<stdio.h>
+#include<stdlib.h>
+int binarysearch(int a[],int n,int ele){
+    int flag=0,low=0,high=n-1,mid;
+    while(low<=high){
+        mid=(low+high)/2;
+        if(a[mid]==ele)   return mid;
+        /*{   flag=1;
+            break;
+        }*/
+        else if(ele<a[mid])  high=mid-1;
+        else               low=mid+1;
+    }
+   /* if(flag)   return mid;
+    else    return -1;*/
+    return -1;
+}
+void Take_array(int a[],int n){
+    for(int i=0;i<n;i++){
+        printf("Enter the element %d :",i+1);
+        scanf("%d",&a[i]);
+    }
+}
+void Print_array(int a[],int n){
+    for(int i=0;i<n;i++)     printf("%d\t",a[i]);
+    printf("\n");
+}
+int main(){
+    int arr[200],n,ele,ch;
+    printf("Enter the number of elments will be given:");
+    scanf("%d",&n);
+    printf("Enter the elements:\n");
+    Take_array(arr,n);
+    Print_array(arr,n);
+    printf("Enter element to search:");
+    scanf("%d",&ele);
+    ch=binarysearch(arr,n,ele);
+    (ch==-1)?printf("Element %d is not present:",ele):printf("Element %d is present:",ele);
+}
