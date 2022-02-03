@@ -10,23 +10,23 @@ void push(int x){
 void peak(){
    printf("peak is: %d\n",a[top]);
 }
-void pop(){
+int pop(){
     if(top==-1)   printf("STACK UNDERFLOW:");
     else{
         int k=a[top];
         top--;
-        printf("Element %d is eleminated\n",k);
+        return k;
     }
 }
 void display(){
     int i;
-    if(top==-1)   printf("There are no elements to print");
+    if(top==-1)   printf("\nThere are no elements to print\n");
     else{
-        for(i=top;i>=0;i--)  printf("%d->%d\n",i+1,a[i]);
+        for(i=top;i>=0;i--)  printf("[%d]->%d\n",i+1,a[i]);
     }
 }
 void main(){
-    int x,ch;
+    int x,ch,l;
     while(1){
         printf("1:push\n2:pop\n3:peak\n4:display\n5:EXIT\n");
         scanf("%d",&ch);
@@ -35,11 +35,10 @@ void main(){
                    scanf("%d",&x);
                    push(x);
                    break;
-            case 2:pop();
+            case 2:l=pop();
                    display();
                    break;
             case 3:peak();
-                   display();
                    break;
             case 4:printf("the elements in stack are:\n");
                    display();
