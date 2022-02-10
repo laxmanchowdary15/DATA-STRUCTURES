@@ -20,8 +20,10 @@ char pop()
 }
 void precedence(char ch)
 {
-    while(priority(ch)<=priority(a[top]))
-        postfix[j++]=pop();
+    while(priority(ch)<=priority(a[top])){
+      if(ch=='^' && a[top]=='^')    break;
+      postfix[j++]=pop();
+     }
 }
 void push(char ch)
 {
