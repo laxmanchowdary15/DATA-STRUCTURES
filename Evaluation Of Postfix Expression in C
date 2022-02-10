@@ -1,0 +1,40 @@
+#define MAX 20
+#include<stdio.h>
+#include<math.h>
+#include<ctype.h>
+int a[MAX],top=-1;
+int operation(int op1,int op2,char c){
+    switch(c){
+        case '^':return (pow(op1,op2));  
+        case '*':return (op1*op2);
+        case '/':return (op1/op2);
+        case '%':return (op1%op2);
+        case '+':return (op1+op2);
+        case '-':return (op1-op2);
+    }
+}
+void push(int x){
+    a[++top]=x;
+}
+int pop(){
+    return(a[top--]);
+}
+
+int main(){
+    char postfix[MAX],c;
+    int op1,op2,result,i=0;
+    printf("Enter the POSTFIX expression:\n\t");
+    scanf("%s",postfix);
+    while(postfix[i]!='\0'){
+        c=postfix[i];
+        if isdigit(c)   push(c-'0');
+        else{
+            op2=pop();
+            op1=pop();
+            result=operation(op1,op2,c);
+            push(result);
+        }
+        i++;
+    }
+    printf("The result of POSTFIX expression of:\n\t%sis:\n\t%d",postfix,a[top]);
+}
