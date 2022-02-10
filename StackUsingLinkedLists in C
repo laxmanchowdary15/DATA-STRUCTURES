@@ -29,7 +29,7 @@ void peak(){
 }
 void pop(){
     node *temp=top;
-    if(top==NULL)  printf("NO ELEMENTS TO PRINT\n");
+    if(top==NULL)  printf("NO ELEMENTS IN STACK\n");
     else{
         top=top->next;
         free(temp);
