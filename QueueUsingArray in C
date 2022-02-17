@@ -1,0 +1,57 @@
+#define MAX 50
+#include<stdio.h>
+#include<stdlib.h>
+int a[MAX],front =-1,rear=-1;
+void EnQueue(int x){
+    if(rear==MAX-1) printf("$$_Queue Overflow@@\n");
+    else{
+        if(front==-1)  front=rear=0;
+        else rear++;
+        a[rear]=x;
+    }
+}
+void Display(){
+    if(front==-1)   printf("Queue Is Empty-No Elements To Print!!");
+    else{
+        int f=front;
+        printf(" |\n v\nFRONT");
+        while(f<=rear){
+            printf("%d||->%d\n",f,a[f]);
+            f++;
+        }
+        printf(" ^\n |\nREAR");
+       /* for(int i=front;i<=rear;i++)   printf("%d||->%d\n",i,a[i]);*/
+    }
+}
+int DeQueue(){
+    if(front==-1)  return -1;
+    else{
+        int x=a[front];
+        if(front==rear)  front=rear=-1;
+        else   front++;
+        return x;
+    }
+}
+int main(){
+    int ch,x;
+    while(1){
+        printf("\n1:EnQueue\n2:DeQueue\n3:Display\n4:EXIT\n");
+        printf("Enter Your Choice:");
+        scanf("%d",&ch);
+        switch(ch){
+            case 1: printf("Enter The Number Into Queue-");
+                    scanf("%d",&x);
+                    EnQueue(x);
+                    break;
+            case 2: x=DeQueue();
+                    if(x==-1)  printf("$$_Queue Underflow@@\n"); 
+                    else       printf("The Element Deleted From Queue Is:%d\n",x);
+                    Display();
+                    break;
+            case 3: Display();
+                    break;
+            case 4: exit(0);
+            default:printf("Enter Correct Choice::");
+        }
+    }
+}
