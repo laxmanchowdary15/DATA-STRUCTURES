@@ -58,15 +58,19 @@ node* delete(node *p,int x){
     if(p==NULL)  return p;
     else if(x > p->data)  p->right=delete(p->right,x);
     else if(x < p->data)  p->left=delete(p->left,x);
-    else if(p->left != NULL && p->right !=NULL){
+    else{
+        if(p->right==NULL){
+            p=p->right;
+            free(p);
+            return p;
+        }
+        else if(p->left==NULL){
+            p=p->left;
+            free(p);
+            return p;
+        }
         x=p->data=FindMin(p->right)->data;
         p->right=delete(p->right,x);
-    }
-    else{
-        temp=p;
-        if(p->right==NULL)  p=p->right;
-        else if(p->left==NULL)  p=p->left;
-        free(temp);
     }
     return p;
 }
