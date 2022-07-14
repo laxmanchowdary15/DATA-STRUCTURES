@@ -1,0 +1,59 @@
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+def get_ab(df):
+    df['x2']=df['x']**2
+    df['xy']=df['x']*df['y']
+    n=len(df.index)
+    sums=[]
+    for col in df:
+        sums.append(sum(df[col]))
+    df.loc[n+1]=sums
+    sx,sy,sx2,sxy=df.loc[n+1]
+    a=(sx2*sy - sx*sxy)/(n*sx2 - sx**2)
+    b=(n*sxy - sx*sy)/(n*sx2 - sx**2)
+    a=round(a,6)
+    b=round(b,6)
+    return a,b
+def predict(df,a,b):
+    return a+b*df.iloc[0:-1]['x']
+data={'x':[1,2,3,4,6,8],
+     'y':[2.4,3,3.6,4,5,6]}
+df=pd.DataFrame(data)
+a,b=get_ab(df)
+
+print(a,'\n',b,'\n',sep='')
+
+yi=predict(df,a,b)
+new_df=pd.DataFrame({'x':df.iloc[:-1]['x'],
+                    'y':df.iloc[:-1]['y'],
+                    'yi':yi})
+
+print(new_df,'\n')
+#plotting
+
+plt.plot(new_df['x'],new_df['y'],'o')
+plt.plot(new_df['x'],new_df['yi'])
+plt.show()
+actual_y=np.array(df.iloc[:-1]['y'])
+
+predicted_y=np.array(yi)
+#total error
+
+total_error=np.array(actual_y-predicted_y)
+
+sum_tot=np.sum(total_error**2)
+
+total_error= sum_tot/len(total_error)
+print("Total error:",total_error)
+mean_act_y=np.mean(actual_y)
+ssr2=0
+sst2=0
+for i in range(len(actual_y)):
+    sst2+=(actual_y[i]-mean_act_y)**2
+    ssr2+=(actual_y[i]-predicted_y[i])**2
+ssr,sst=ssr2**0.5,sst2**0.5
+print('ssr:',ssr,'sst:',sst)
+#R-squared
+r2=1-(ssr/sst)
+print("r-squared is:",r2)
